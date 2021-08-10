@@ -1,0 +1,9 @@
+# npm
+node_modules
+package-lock.json
+
+# build
+dist/
+
+# obsidian
+data.json

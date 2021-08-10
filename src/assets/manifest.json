@@ -1,0 +1,10 @@
+{
+  "id": "drawio-obsidian",
+  "name": "Draw.io Plugin",
+  "version": "1.0.1",
+  "minAppVersion": "0.9.12",
+  "description": "This is a draw.io plugin for Obsidian.",
+  "author": "Sam Greenhalgh",
+  "authorUrl": "https://www.radicalresearch.co.uk/",
+  "isDesktopOnly": true
+}
