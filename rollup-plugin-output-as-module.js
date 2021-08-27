@@ -1,3 +1,4 @@
+import { relative, posix, sep } from "path";
 const prefix = "bundle!";
 
 export function storeBundle(cache) {
@@ -7,8 +8,11 @@ export function storeBundle(cache) {
       const bundleNames = Object.keys(bundle);
       bundleNames.forEach((name) => {
         const output = bundle[name];
-        console.log("store", name);
-        cache.set(name, output.code);
+        const relativePath = relative("", output.facadeModuleId)
+          .split(sep)
+          .join(posix.sep);
+        console.log("store", relativePath);
+        cache.set(relativePath, output.code);
       });
       bundleNames.forEach((name) => {
         delete bundle[name];

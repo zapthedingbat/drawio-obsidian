@@ -1,6 +1,5 @@
-import appScript from "inline!./drawio/src/main/webapp/js/app.min.js";
-import commonCss from "inline!./drawio/src/main/webapp/mxgraph/css/common.css";
-import graphEditorCss from "inline!./src/assets/grapheditor.css";
+//import commonCss from "inline!./drawio/src/main/webapp/mxgraph/css/common.css";
+import drawioCss from "base64!./src/drawio-client/drawio.css";
 import darkCss from "inline!./drawio/src/main/webapp/styles/dark.css";
 import diaTxt from "inline!./drawio/src/main/webapp/resources/dia.txt";
 import stencils from "inline!./drawio/src/main/webapp/js/stencils.min.js";
@@ -12,19 +11,14 @@ import drawlogoSvg from "base64!./drawio/src/main/webapp/images/drawlogo.svg";
 
 export default [
   {
-    mediaType: "text/css",
-    href: "js/app.min.js",
-    source: appScript,
-  },
-  {
-    mediaType: "text/css",
-    href: "assets/grapheditor.css",
-    source: graphEditorCss,
+    mediaType: "text/css;base64",
+    href: "local://drawio.css",
+    source: drawioCss,
   },
   {
     mediaType: "text/css",
     href: "mxgraph/css/common.css",
-    source: commonCss,
+    source: "",
   },
   {
     mediaType: "text/css",

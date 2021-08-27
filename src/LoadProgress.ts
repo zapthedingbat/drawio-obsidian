@@ -1,16 +1,10 @@
-import { App as ObsidianApp } from "obsidian";
-import { getPropertyOf } from "./getPropertyOf";
+import { App as ObsidianApp, LoadProgress } from "obsidian";
 
-export declare interface LoadProgress {
-  setMessage(message: string): LoadProgress;
-  show(): LoadProgress;
-  hide(): LoadProgress;
-}
 export function createLoadProgress(
   app: ObsidianApp,
   container: HTMLElement
 ): LoadProgress {
-  const obsidianAppLoadProgress = getPropertyOf<any>(app, "loadProgress");
+  const obsidianAppLoadProgress = app.loadProgress;
   const ObsidianLoadProgress = Object.getPrototypeOf(
     obsidianAppLoadProgress
   ).constructor;

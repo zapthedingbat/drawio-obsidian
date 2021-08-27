@@ -3,13 +3,13 @@
     "allowJs": true,
     "baseUrl": ".",
     "importHelpers": true,
-    "inlineSourceMap": false,
-    "inlineSources": false,
-    "lib": ["dom", "es6", "scripthost"],
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "lib": ["dom", "ES6"],
     "module": "ESNext",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "target": "ES6"
+    "target": "ES5"
   },
   "include": ["./src/**/*.ts", "./typings/*.ts"]
 }

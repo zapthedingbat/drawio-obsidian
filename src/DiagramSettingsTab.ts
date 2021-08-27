@@ -32,7 +32,7 @@ export default class DiagramSettingsTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Theme")
-      .setDesc("DrawIO interface theme")
+      .setDesc("Interface theme")
       .addDropdown((component) => {
         component
           .addOptions({

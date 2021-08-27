@@ -1,8 +1,8 @@
-const fs = require("fs");
+import * as fs from "fs";
 const inlinePrefix = "inline!";
 const base64Prefix = "base64!";
 
-const plugin = (options) => {
+export default function inline() {
   const sources = new Map();
 
   return {
@@ -41,6 +41,4 @@ const plugin = (options) => {
       return null;
     },
   };
-};
-
-module.exports = plugin;
+}
