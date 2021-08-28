@@ -24,12 +24,11 @@ export class DiagramEditView extends DiagramViewBase {
   private async handleFileChange(event: FileChangeEvent) {
     await this.app.vault.modify(this.file, event.data);
 
-    // TODO: Update other views with diagram changes
+    // Update other views with diagram changes
     const diagramViewLeafs =
       this.app.workspace.getLeavesOfType(DIAGRAM_VIEW_TYPE);
     for (const diagramViewLeaf of diagramViewLeafs) {
       const diagramView = diagramViewLeaf.view as DiagramView;
-      console.log("same file?", diagramView.file.path, this.file.path);
       if (diagramView.file.path === this.file.path) {
         // Reload the file
         diagramView.onLoadFile(diagramView.file);
