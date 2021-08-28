@@ -1,6 +1,5 @@
 import typescript from "@rollup/plugin-typescript";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
+import { terser } from "rollup-plugin-terser";
 import copy from "rollup-plugin-copy";
 import clear from "rollup-plugin-clear";
 import inline from "./rollup-plugin-inline";
@@ -30,6 +29,7 @@ export default [
       typescript({
         tsconfig: "./tsconfig.es5.json",
       }),
+      terser(),
     ],
   },
   {
@@ -47,25 +47,28 @@ export default [
       typescript({
         tsconfig: "./tsconfig.es5.json",
       }),
+      terser(),
     ],
   },
   {
     input: "./src/DiagramPlugin.ts",
-    output: {
-      file: "./dist/main.js",
-      format: "cjs",
-      exports: "default",
-      banner,
-      sourcemap: true,
-    },
+    output: [
+      {
+        file: "./dist/main.js",
+        format: "cjs",
+        exports: "default",
+        banner,
+      },
+    ],
     external: ["obsidian"],
     plugins: [
       clear({ targets: ["./dist"] }),
       retrieveBundle(chunkCache),
       inline(),
-      typescript({ sourceMap: true, inlineSources: true }),
-      nodeResolve({ browser: true }),
-      commonjs(),
+      typescript(),
+      //nodeResolve({ browser: true }),
+      //commonjs(),
+      terser(),
       copy({
         targets: [
           { src: "./src/assets/manifest.json", dest: "./dist" },
