@@ -21,15 +21,14 @@ export default [
       file: "./dist/init.js",
       format: "iife",
       banner,
-      sourcemap: true,
     },
     plugins: [
-      storeBundle(chunkCache),
       inline(),
       typescript({
         tsconfig: "./tsconfig.es5.json",
       }),
       terser(),
+      storeBundle(chunkCache),
     ],
   },
   {
@@ -39,15 +38,14 @@ export default [
       file: "./dist/app.js",
       format: "iife",
       banner,
-      sourcemap: true,
     },
     plugins: [
-      storeBundle(chunkCache),
       inline(),
       typescript({
         tsconfig: "./tsconfig.es5.json",
       }),
       terser(),
+      storeBundle(chunkCache),
     ],
   },
   {
@@ -62,13 +60,11 @@ export default [
     ],
     external: ["obsidian"],
     plugins: [
-      clear({ targets: ["./dist"] }),
+      //clear({ targets: ["./dist"] }),
       retrieveBundle(chunkCache),
       inline(),
       typescript(),
-      //nodeResolve({ browser: true }),
-      //commonjs(),
-      terser(),
+      //terser(),
       copy({
         targets: [
           { src: "./src/assets/manifest.json", dest: "./dist" },

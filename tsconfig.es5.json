@@ -3,8 +3,6 @@
     "allowJs": true,
     "baseUrl": ".",
     "importHelpers": true,
-    "inlineSourceMap": true,
-    "inlineSources": true,
     "lib": ["dom", "ES6"],
     "module": "ESNext",
     "moduleResolution": "node",
