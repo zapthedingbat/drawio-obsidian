@@ -1,5 +1,4 @@
 import Plugin from "./Plugin";
-// import { EditorUiEx } from "./EditorUi";
 
 /**
  * This is the entry point that is loaded into the iframe.
@@ -13,6 +12,7 @@ function app() {
     (menuItem: string) => menuItem !== "help"
   );
 
+  console.log("App.main");
   App.main(Plugin.plugin);
 }
 

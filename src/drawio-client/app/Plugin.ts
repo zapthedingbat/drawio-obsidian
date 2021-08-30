@@ -18,7 +18,7 @@ export default class Plugin {
     // Add the app instance to global scope for debugging
     Object.defineProperty(window, "drawioApp", { value: app });
 
-    // This makes debugging easier because the [[TargetFunction]] symbol lets us find the original function
+    // This makes debugging easier because the dev tools exposes the [[TargetFunction]]
     mxUtils.bind = (thisArg: any, fn: Function) => {
       return fn.bind(thisArg);
     };
@@ -41,7 +41,7 @@ export default class Plugin {
       this.handleGraphChange.bind(this)
     );
 
-    // TODO: Link vault structure with diagram cells
+    // TODO: Make it easy to link the selected cell to a note
     app.editor.graph.addListener("click", this.handleGraphClick.bind(this));
 
     // Change the drawio app user interface
@@ -64,6 +64,7 @@ export default class Plugin {
   }
 
   handleGraphClick(sender: any, eventObj: mxEventObject) {
+    // TODO: Make it easy to link the selected cell to a note
     const cell: any | null = eventObj.getProperty("cell");
   }
 
