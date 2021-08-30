@@ -4,7 +4,7 @@
   "description": "This is a draw.io plugin for Obsidian (https://obsidian.md)",
   "main": "main.js",
   "scripts": {
-    "build": "rollup --config rollup.config.js --environment BUILD:production"
+    "build": "rollup --config rollup.config.js"
   },
   "keywords": [],
   "author": "",
