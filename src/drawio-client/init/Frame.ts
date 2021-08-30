@@ -5,32 +5,38 @@ import {
 } from "../../Messages";
 import { FrameMessenger } from "../../FrameMessenger";
 import { loadScript } from "./RequestManager";
-import { UrlParamManager } from "./UrlParamManager";
+import { ConfigurationManager } from "./ConfigurationManager";
 
 export class Frame {
   window: Window;
   frameMessenger: FrameMessenger;
   urlParams: Object;
-  urlParamManager: UrlParamManager;
+  configurationManager: ConfigurationManager;
 
-  public static main(window: Window, urlParamManager: UrlParamManager) {
-    return new Frame(window, urlParamManager);
+  public static main(
+    window: Window,
+    configurationManager: ConfigurationManager
+  ) {
+    return new Frame(window, configurationManager);
   }
 
-  private constructor(window: Window, urlParamManager: UrlParamManager) {
+  private constructor(
+    window: Window,
+    configurationManager: ConfigurationManager
+  ) {
     this.window = window;
     this.frameMessenger = new FrameMessenger(
       () => this.window.parent,
       this.handleMessages.bind(this)
     );
-    this.urlParamManager = urlParamManager;
+    this.configurationManager = configurationManager;
 
     // Stub out the cookie that drawio tries to read - this would throw an error because
     // cookies aren't available in the page loaded from a data: url
     Object.defineProperty(document, "cookie", { value: "" });
 
     // Don't make requests for resources, use inline defaults.
-    Object.defineProperty(window, "mxLoadResources", { value: false });
+    Object.defineProperty(window, "mxLoadResources", { value: true });
 
     // Set the script loading function in the global scope
     Object.defineProperty(window, "mxscript", {
@@ -63,10 +69,7 @@ export class Frame {
 
   handleFrameConfigMessage(message: FrameConfigActionMessage) {
     const settings = message.settings;
-    this.urlParamManager.setValues(settings);
-    // this.frameMessenger.sendMessage({
-    //   event: EventMessageEvents.FrameConfigSet,
-    // });
+    this.configurationManager.setConfig(settings);
   }
 
   handleMessages(message: ActionMessage) {

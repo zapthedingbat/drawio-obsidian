@@ -1,7 +1,7 @@
 import { Frame } from "./Frame";
-import { loadStylesheet, RequestManager } from "./RequestManager";
-import { UrlParamManager } from "./UrlParamManager";
 import Responses from "./Responses";
+import { loadStylesheet, RequestManager } from "./RequestManager";
+import { ConfigurationManager } from "./ConfigurationManager";
 
 /**
  * This is the entry point that is loaded into the iframe.
@@ -17,12 +17,7 @@ function init(win: Window) {
   loadStylesheet("local://drawio.css");
 
   // Prepare the window to inject the drawio application code into it.
-  Frame.main(
-    win,
-    new UrlParamManager(win, {
-      /* No initial url params */
-    })
-  );
+  Frame.main(win, new ConfigurationManager(win));
 }
 
 init(window);
