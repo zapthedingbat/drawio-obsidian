@@ -1,5 +1,5 @@
 //import commonCss from "inline!./drawio/src/main/webapp/mxgraph/css/common.css";
-import drawioCss from "base64!./src/drawio-client/drawio.css";
+import drawioCss from "inline!./src/drawio-client/drawio.css";
 import darkCss from "inline!./drawio/src/main/webapp/styles/dark.css";
 import diaTxt from "inline!./drawio/src/main/webapp/resources/dia.txt";
 
@@ -14,11 +14,11 @@ import shapes from "inline!./src/assets/shapes.js";
 
 import maximizeGif from "base64!./drawio/src/main/webapp/mxgraph/images/maximize.gif";
 import resizeGif from "base64!./drawio/src/main/webapp/mxgraph/images/resize.gif";
-import drawlogoSvg from "base64!./drawio/src/main/webapp/images/drawlogo.svg";
+import drawlogoSvg from "inline!./drawio/src/main/webapp/images/drawlogo.svg";
 
 export default [
   {
-    mediaType: "text/css;base64",
+    mediaType: "text/css",
     href: "local://drawio.css",
     source: drawioCss,
   },
@@ -63,7 +63,7 @@ export default [
     source: resizeGif,
   },
   {
-    mediaType: "image/svg+xml;base64",
+    mediaType: "image/svg+xml",
     href: "images/drawlogo.svg",
     source: drawlogoSvg,
   },
