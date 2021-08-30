@@ -60,11 +60,11 @@ export default [
     ],
     external: ["obsidian"],
     plugins: [
-      //clear({ targets: ["./dist"] }),
+      clear({ targets: ["./dist"] }),
       retrieveBundle(chunkCache),
       inline(),
       typescript(),
-      //terser(),
+      terser(),
       copy({
         targets: [
           { src: "./src/assets/manifest.json", dest: "./dist" },
