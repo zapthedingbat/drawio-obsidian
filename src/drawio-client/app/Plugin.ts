@@ -77,7 +77,7 @@ export default class Plugin {
 
     if (this.fileFormat === "svg") {
       // Update svg format
-      const svg = await this.getSvg2(this.app.editor);
+      const svg = await this.getSvg(this.app.editor);
       this.frameMessenger.sendMessage({
         event: EventMessageEvents.Change,
         data: svg,
@@ -170,7 +170,7 @@ export default class Plugin {
   }
 
   // Get SVG data for saving
-  async getSvg2(editor: Editor): Promise<string> {
+  async getSvg(editor: Editor): Promise<string> {
     const svgNamespaceUri = "http://www.w3.org/2000/svg";
     const svgDocument = document.createElementNS(svgNamespaceUri, "svg");
 
@@ -210,38 +210,6 @@ export default class Plugin {
     const xml = this.xmlToString(svgDocument);
 
     return xml;
-  }
-
-  // Get SVG data for saving
-  async getSvg(editor: Editor) {
-    const imageExport = new mxImageExport();
-    const svg = editor.graph.getSvg(
-      "none",
-      1,
-      0,
-      false,
-      true,
-      true,
-      true,
-      imageExport,
-      "_blank",
-      false,
-      null,
-      null,
-      "diagram",
-      null
-    );
-
-    // Embed the graph xml into the SVG
-    this.embedGraphInSvg(editor, svg);
-
-    // Add font CSS to SVG
-    await this.embedFontsInSvg(editor, svg);
-
-    // Add margin to SVG
-    this.addViewBoxMarginToSvg(svg);
-
-    return this.xmlToString(svg);
   }
 
   private embedGraphInSvg(editor: Editor, svg: SVGElement) {
