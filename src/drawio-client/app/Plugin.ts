@@ -1,4 +1,4 @@
-import { mxPopupMenu } from "mxgraph";
+import { mxEventObject, mxPopupMenu } from "mxgraph";
 import {
   ActionMessage,
   DrawioLoadActionMessage,
@@ -63,12 +63,12 @@ export default class Plugin {
     this.fileFormat = /\<svg[\>\s]/.test(message.xml) ? "svg" : "xml";
   }
 
-  handleGraphClick(sender: any, eventObj: mxEventObject) {
+  handleGraphClick(_sender: any, eventObj: mxEventObject) {
     // TODO: Make it easy to link the selected cell to a note
-    const cell: any | null = eventObj.getProperty("cell");
+    // const cell = eventObj.getProperty("cell");
   }
 
-  async handleGraphChange(sender: mxGraphModel, event: mxEventObject) {
+  async handleGraphChange() {
     const currentFile = this.app.getCurrentFile();
     if (!currentFile || !this.fileFormat) {
       //"No current file or format yet
