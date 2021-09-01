@@ -11,7 +11,7 @@
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-typescript": "8.2.5",
-    "@types/node": "14.17.12",
+    "@types/node": "14.17.14",
     "@types/w3c-css-typed-object-model-level-1": "20180410.0.4",
     "obsidian": "0.12.11",
     "rollup": "2.56.3",
