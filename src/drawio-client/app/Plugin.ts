@@ -179,13 +179,16 @@ export default class Plugin {
     const { x, y, height, width } = view.graphBounds;
     const viewScale = view.scale;
     svgDocument.setAttribute("version", "1.1");
+    svgDocument.setAttribute("height", `${height / viewScale}px`);
+    svgDocument.setAttribute("width", `${width / viewScale}px`);
     svgDocument.setAttribute(
       "viewBox",
-      `0 0 ${width * viewScale} ${height * viewScale}`
+      `0 0 ${width / viewScale} ${height / viewScale}`
     );
 
     const svgCanvas = new mxSvgCanvas2D(svgDocument);
-    svgCanvas.translate(-x, -y);
+    svgCanvas.translate(-x / viewScale, -y / viewScale);
+    svgCanvas.scale(1 / viewScale);
 
     const imageExport = new mxImageExport();
     const graphCellState = view.getState(graph.model.root);

@@ -19,6 +19,7 @@ declare module "mxgraph" {
 
     class mxSvgCanvas2D {
       constructor(node: Node);
+      scale(scale: number): void;
       translate(x: number, y: number): void;
     }
   }
