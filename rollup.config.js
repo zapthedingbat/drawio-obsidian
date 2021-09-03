@@ -67,7 +67,7 @@ export default [
       terser(),
       copy({
         targets: [
-          { src: "./src/assets/manifest.json", dest: "./dist" },
+          { src: "./manifest.json", dest: "./dist" },
           { src: "./src/assets/styles.css", dest: "./dist" },
         ],
       }),
