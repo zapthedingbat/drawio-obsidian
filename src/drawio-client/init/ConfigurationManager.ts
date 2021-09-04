@@ -333,9 +333,7 @@ export class ConfigurationManager {
 
   public setConfig(settings: DiagramPluginSettings) {
     // Apply configuration from settings
-    const config: DrawioConfig = {
-      // TODO: Make some reasonable settings configurable
-    };
+    const config = this.getDrawioConfig(settings);
     this.setDrawioConfig(config);
 
     // Apply UrlParams from settings
@@ -385,5 +383,75 @@ export class ConfigurationManager {
 
   private getSketch(settings: DiagramPluginSettings): DrawioUrlParamsFlag {
     return settings.theme.layout === SettingsTheme.sketch ? "1" : "0";
+  }
+
+  private getDrawioConfig(settings: DiagramPluginSettings): DrawioConfig {
+    return {
+      defaultLibraries: "general",
+      libraries: [],
+      defaultEdgeStyle: this.getDefaultEdgeStyle(settings),
+      defaultVertexStyle: this.getDefaultVertexStyle(settings),
+      styles: [
+        {},
+        // {
+        //   commonStyle: {
+        //     fillColor: "#ffffff",
+        //     strokeColor: "currentColor",
+        //   },
+        // },
+      ],
+    };
+  }
+
+  private getDefaultVertexStyle(
+    settings: DiagramPluginSettings
+  ): Record<string, string> {
+    const defaultVertexStyle = {
+      fillColor: "#ffffff",
+      strokeColor: "currentColor",
+    };
+
+    if (settings.drawing.sketch) {
+      Object.assign(defaultVertexStyle, {
+        fillColor: "none",
+        hachureGap: "4",
+        fontFamily: "Architects Daughter",
+        fontSource:
+          "https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter",
+        sketch: "1",
+      });
+    }
+
+    return defaultVertexStyle;
+  }
+
+  private getDefaultEdgeStyle(
+    settings: DiagramPluginSettings
+  ): Record<string, string> {
+    const defaultEdgeStyle = {
+      edgeStyle: "none",
+      strokeColor: "currentColor",
+    };
+
+    if (settings.drawing.sketch) {
+      Object.assign(defaultEdgeStyle, {
+        hachureGap: "4",
+        fontFamily: "Architects Daughter",
+        fontSource:
+          "https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter",
+        sourcePerimeterSpacing: "8",
+        targetPerimeterSpacing: "8",
+        endSize: "12",
+        startSize: "12",
+        endArrow: "open",
+        sketch: "1",
+      });
+    } else {
+      Object.assign(defaultEdgeStyle, {
+        endArrow: "block",
+        sketch: "0",
+      });
+    }
+    return defaultEdgeStyle;
   }
 }

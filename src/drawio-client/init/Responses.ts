@@ -1,7 +1,10 @@
+import diaTxt from "inline!./drawio/src/main/webapp/resources/dia.txt";
+
 //import commonCss from "inline!./drawio/src/main/webapp/mxgraph/css/common.css";
 import drawioCss from "inline!./src/drawio-client/drawio.css";
-import darkCss from "inline!./drawio/src/main/webapp/styles/dark.css";
-import diaTxt from "inline!./drawio/src/main/webapp/resources/dia.txt";
+
+//import darkCss from "inline!./drawio/src/main/webapp/styles/dark.css";
+import darkCss from "inline!./src/assets/dark.css";
 
 //import stencils from "inline!./drawio/src/main/webapp/js/stencils.min.js";
 import stencils from "inline!./src/assets/shapes.js";

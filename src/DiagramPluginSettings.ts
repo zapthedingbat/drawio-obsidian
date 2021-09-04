@@ -4,7 +4,7 @@ export enum SettingsTheme {
   sketch = "sketch",
 }
 
-type optionalBoolean = true | false | undefined;
+type optionalBoolean = true | false | null;
 
 export interface DiagramPluginSettings {
   theme: {
@@ -19,7 +19,7 @@ export interface DiagramPluginSettings {
 export const DEFAULT_SETTINGS: DiagramPluginSettings = {
   theme: {
     dark: null,
-    layout: SettingsTheme.full,
+    layout: SettingsTheme.sketch,
   },
   drawing: {
     sketch: true,

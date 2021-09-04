@@ -222,7 +222,7 @@ export default class DiagramPlugin extends Plugin {
       {},
       this.settings
     );
-    if (typeof configuration.theme.dark === "undefined") {
+    if (typeof configuration.theme.dark !== "boolean") {
       configuration.theme.dark = this.isAppThemeDark();
     }
     return configuration;

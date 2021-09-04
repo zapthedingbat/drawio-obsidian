@@ -11,8 +11,6 @@ function app() {
   Menus.prototype.defaultMenuItems = Menus.prototype.defaultMenuItems.filter(
     (menuItem: string) => menuItem !== "help"
   );
-
-  console.log("App.main");
   App.main(Plugin.plugin);
 }
 

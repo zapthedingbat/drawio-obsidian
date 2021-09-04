@@ -181,7 +181,7 @@ div.mxTooltip {
   color: #000;
 }
 div.mxPopupMenu {
-  background: url(data:image/gif;base64,R0lGODlhGgAUAIAAAOzs7PDw8CH5BAAAAAAALAAAAAAaABQAAAIijI+py70Ao5y02lud3lzhD4ZUR5aPiKajyZbqq7YyB9dhAQA7);
+  background-color: #fff;
 }
 table.mxPopupMenu {
   border-collapse: collapse;
