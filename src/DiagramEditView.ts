@@ -121,6 +121,12 @@ export class DiagramEditView extends DiagramViewBase {
       "fileChange",
       this.handleFileChange.bind(this)
     );
+
+    // Set the active leaf because the blur event doesn't leave the iframe so Obsidian doesn't
+    // handel it automatically
+    this.drawioClient.addEventListener("focusin", () =>
+      this.app.workspace.setActiveLeaf(this.leaf)
+    );
   }
 
   async onClose() {

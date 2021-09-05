@@ -51,6 +51,8 @@ export enum EventMessageEvents {
   Iframe = "iframe",
   Init = "init",
   Load = "load",
+  FocusIn = "focusin",
+  FocusOut = "focusout",
 }
 
 export type FileChangeEventMessage = {
@@ -60,6 +62,14 @@ export type FileChangeEventMessage = {
 
 export type FrameEventMessage = {
   event: EventMessageEvents.Iframe;
+};
+
+export type FocusInEventMessage = {
+  event: EventMessageEvents.FocusIn;
+};
+
+export type FocusOutEventMessage = {
+  event: EventMessageEvents.FocusOut;
 };
 
 export type DrawioInitEventMessage = {
@@ -73,6 +83,8 @@ export type DrawioLoadEventMessage = {
 
 export type EventMessage =
   | FrameEventMessage
+  | FocusInEventMessage
+  | FocusOutEventMessage
   | DrawioInitEventMessage
   | DrawioLoadEventMessage
   | FileChangeEventMessage;

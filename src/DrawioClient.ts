@@ -166,6 +166,8 @@ export default class DrawioClient implements EventTarget {
     overlayEl.style.height = "100%";
     overlayEl.style.width = "100%";
     overlayEl.style.zIndex = "2";
+    overlayEl.style.opacity = "0.1";
+    overlayEl.style.backgroundColor = "rgba(0,0,0,.1)";
 
     return overlayEl;
   }
@@ -263,6 +265,12 @@ window.parent.postMessage("{\\"event\\":\\"iframe\\"}",'*');
         // Update the file data so it can be reloaded if the frame is reinitialized
         this.file.data = message.data;
         this.dispatchEvent(new FileChangeEvent(message.data));
+        break;
+      case EventMessageEvents.FocusIn:
+        this.dispatchEvent(new Event("focusin"));
+        break;
+      case EventMessageEvents.FocusOut:
+        this.dispatchEvent(new Event("focusout"));
         break;
     }
   }

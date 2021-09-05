@@ -1,6 +1,7 @@
 import {
   ActionMessage,
   ActionMessageActions,
+  EventMessageEvents,
   FrameConfigActionMessage,
 } from "../../Messages";
 import { FrameMessenger } from "../../FrameMessenger";
@@ -41,6 +42,18 @@ export class Frame {
     // Set the script loading function in the global scope
     Object.defineProperty(window, "mxscript", {
       value: loadScript,
+    });
+
+    window.addEventListener("focus", () => {
+      this.frameMessenger.sendMessage({
+        event: EventMessageEvents.FocusIn,
+      });
+    });
+
+    window.addEventListener("blur", () => {
+      this.frameMessenger.sendMessage({
+        event: EventMessageEvents.FocusOut,
+      });
     });
   }
 
