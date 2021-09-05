@@ -44,7 +44,6 @@ export default class DrawioClient implements EventTarget {
   };
   appCss: string;
   iframeElement: HTMLIFrameElement;
-  overlayElement: HTMLElement;
   isInitialized: boolean;
 
   constructor(contentEl: HTMLElement, settings: DiagramPluginSettings) {
@@ -55,7 +54,6 @@ export default class DrawioClient implements EventTarget {
     this.isInitialized = false;
 
     // Create the iframe to contain drawio
-    this.overlayElement = this.createOverlayElement();
     this.iframeElement = this.createFrameElement();
 
     // Start handling message communication between frames
@@ -64,17 +62,7 @@ export default class DrawioClient implements EventTarget {
       this.handleMessage.bind(this)
     );
 
-    // Hide overlay when it's clicked
-    this.iframeElement.addEventListener("focusout", () => {
-      this.overlayElement.style.visibility = "visible";
-    });
-
-    this.overlayElement.addEventListener("mousedown", () => {
-      this.overlayElement.style.visibility = "hidden";
-    });
-
     // Add elements into DOM
-    this.contentEl.appendChild(this.overlayElement);
     this.contentEl.appendChild(this.iframeElement);
   }
 
@@ -153,23 +141,6 @@ export default class DrawioClient implements EventTarget {
       callback,
       options
     );
-  }
-
-  private createOverlayElement(): HTMLElement {
-    // Add an overlay element over the iframe so that mouse events still bubble up to the root document.
-    // The overlay is hidden when clicked so the iframe can still get focus, but is show again when focus leaves the iframe
-    const overlayEl = document.createElement("div");
-    overlayEl.className = "drawioViewOverlay";
-    overlayEl.style.position = "absolute";
-    overlayEl.style.top = "0";
-    overlayEl.style.left = "0";
-    overlayEl.style.height = "100%";
-    overlayEl.style.width = "100%";
-    overlayEl.style.zIndex = "2";
-    overlayEl.style.opacity = "0.1";
-    overlayEl.style.backgroundColor = "rgba(0,0,0,.1)";
-
-    return overlayEl;
   }
 
   private createFrameElement(): HTMLIFrameElement {
