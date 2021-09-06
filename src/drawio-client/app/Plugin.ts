@@ -97,6 +97,16 @@ export default class Plugin {
   }
 
   private modifyUi(app: App) {
+    // TODO: Manage dark mode switching
+    // patch(
+    //   EditorUi.prototype,
+    //   "setDarkMode",
+    //   (fn) =>
+    //     function (dark: boolean) {
+    //       console.log("set dark Mode", dark);
+    //     }
+    // );
+
     // Hide page view
     app.setPageVisible(false);
 
