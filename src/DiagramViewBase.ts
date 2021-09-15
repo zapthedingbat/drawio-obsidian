@@ -46,8 +46,12 @@ export default abstract class DiagramViewBase extends EditableFileView {
     const svgBlob = new Blob([fileData], { type: "image/svg+xml" });
     const dataUrl = await this.readBlob(svgBlob);
     const img = await this.loadImage(dataUrl);
+    // TODO: Maybe make the output resolution an option?
     canvas.height = img.naturalHeight;
     canvas.width = img.naturalWidth;
+    // TODO: Make the background color an option?
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, 0, 0);
     const pngDataUrl = canvas.toDataURL("image/png");
 
