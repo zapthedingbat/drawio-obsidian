@@ -6,10 +6,10 @@
     "inlineSourceMap": false,
     "inlineSources": false,
     "lib": ["dom", "es6", "scripthost"],
-    "module": "ESNext",
+    "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "target": "ES6"
   },
-  "include": ["./src/**/*.ts", "./typings/*.ts"]
+  "include": ["./src/**/*.ts", "./test/**/*.ts", "./typings/*.ts"]
 }
