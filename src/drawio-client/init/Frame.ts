@@ -37,11 +37,30 @@ export class Frame {
     Object.defineProperty(document, "cookie", { value: "" });
 
     // Don't make requests for resources, use inline defaults.
-    Object.defineProperty(window, "mxLoadResources", { value: true });
+    Object.defineProperty(window, "mxLoadResources", { value: false });
 
     // Set the script loading function in the global scope
     Object.defineProperty(window, "mxscript", {
       value: loadScript,
+    });
+
+    // Disable use of local storage
+    Object.defineProperty(window, "isLocalStorage", {
+      value: false,
+    });
+
+    Object.defineProperty(window, "localStorage", {
+      value: {
+        getItem: function (key: string) {
+          console.warn("Disabled localStorage getItem", key);
+        },
+        setItem: function (key: string, value: any) {
+          console.warn("Disabled localStorage setItem", key, value);
+        },
+        removeItem: function (key: string) {
+          console.warn("Disabled localStorage removeItem", key);
+        },
+      },
     });
 
     window.addEventListener("focus", () => {
