@@ -68,30 +68,12 @@ export default class Plugin {
     // const cell = eventObj.getProperty("cell");
   }
 
-  private forceStyles(cell: mxCell) {
-    if (cell.style) {
-      const removeRules = /^(fontSource=|fontColor=|strokeColor=currentColor)/i;
-      cell.style = cell.style
-        .split(";")
-        .filter((s) => !removeRules.test(s))
-        .join(";");
-    }
-
-    if (cell.children !== null) {
-      for (const childCell of cell.children) {
-        this.forceStyles(childCell);
-      }
-    }
-  }
-
   async handleGraphChange() {
     const currentFile = this.app.getCurrentFile();
     if (!currentFile || !this.fileFormat) {
       //"No current file or format yet
       return;
     }
-
-    this.forceStyles(this.app.editor.graph.model.root);
 
     if (this.fileFormat === "svg") {
       // Update svg format
