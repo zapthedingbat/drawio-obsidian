@@ -51,8 +51,10 @@ export class RequestManager {
 
     const file = this.responses.find((file) => file.href === url);
     if (typeof file === "undefined") {
-      console.warn("Missing local resource", url);
-      return url;
+      console.warn("Missing local resource", "https://app.diagrams.net/" + url);
+      // TODO: catch http requests so we can work offline
+      // Allow fully qualified online resources
+      return "https://app.diagrams.net/" + url;
     } else {
       // console.info("Loading local resource", url);
     }
@@ -174,6 +176,7 @@ export class RequestManager {
       (fn) =>
         function (_method: string, url: string, ...args: any[]) {
           url = resolveResourceUrl(url);
+          console.warn("XHR", _method, url);
           return fn.call(this, _method, url, ...args);
         }
     );
