@@ -17,7 +17,7 @@
     "@types/w3c-css-typed-object-model-level-1": "20180410.0.4",
     "chai": "^4.3.4",
     "mocha": "^9.1.1",
-    "obsidian": "0.12.11",
+    "obsidian": "0.12.16",
     "rollup": "2.56.3",
     "rollup-plugin-clear": "2.0.7",
     "rollup-plugin-copy": "3.4.0",
