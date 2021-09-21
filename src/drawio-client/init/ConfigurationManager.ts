@@ -245,22 +245,22 @@ export interface DrawioConfig {
 const defaultConfiguration: DrawioConfig = {
   defaultLibraries: "general",
   libraries: [],
-  defaultEdgeStyle: {
-    strokeColor: "currentColor",
-  },
-  defaultVertexStyle: {
-    fillColor: "#ffffff",
-    strokeColor: "currentColor",
-  },
-  styles: [
-    {},
-    {
-      commonStyle: {
-        fillColor: "#ffffff",
-        strokeColor: "currentColor",
-      },
-    },
-  ],
+  // defaultEdgeStyle: {
+  //   // strokeColor: "currentColor",
+  // },
+  // defaultVertexStyle: {
+  //   // fillColor: "#ffffff",
+  //   // strokeColor: "currentColor",
+  // },
+  // styles: [
+  //   {},
+  //   {
+  //     commonStyle: {
+  //       fillColor: "#ffffff",
+  //       strokeColor: "#000000",
+  //     },
+  //   },
+  // ],
 };
 
 const defaultUrlParams: DrawioUrlParams = {

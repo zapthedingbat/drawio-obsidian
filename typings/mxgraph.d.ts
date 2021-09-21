@@ -7,6 +7,11 @@ declare module "mxgraph" {
 
   export interface mxPopupMenu {}
 
+  export interface mxCell {
+    children: Array<mxCell> | null;
+    style?: string;
+  }
+
   global {
     class mxImageExport {
       getLinkForCellState(state: any, canvas: any): any;
