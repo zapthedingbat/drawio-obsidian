@@ -29,6 +29,7 @@ import {
 } from "./DiagramPluginSettings";
 import DiagramSettingsTab from "./DiagramSettingsTab";
 import DiagramViewBase from "./DiagramViewBase";
+import { WelcomeModal } from "./WelcomeModal";
 
 export default class DiagramPlugin extends Plugin {
   public settings: DiagramPluginSettings;
@@ -72,6 +73,11 @@ export default class DiagramPlugin extends Plugin {
     this.registerEvents();
     this.addSettingTab(new DiagramSettingsTab(this.app, this));
     this.tryAddFileExplorerButton();
+    // Show the welcome modal the first time the plugin is run
+    if (this.settings.welcomeComplete !== true) {
+      const welcome = new WelcomeModal(this.app, this);
+      welcome.open();
+    }
   }
 
   // Register a file extension that might already be registered

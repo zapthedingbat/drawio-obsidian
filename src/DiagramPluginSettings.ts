@@ -7,6 +7,7 @@ export enum SettingsTheme {
 type optionalBoolean = true | false | null;
 
 export interface DiagramPluginSettings {
+  welcomeComplete: boolean;
   theme: {
     dark: optionalBoolean;
     layout: SettingsTheme;
@@ -17,6 +18,7 @@ export interface DiagramPluginSettings {
 }
 
 export const DEFAULT_SETTINGS: DiagramPluginSettings = {
+  welcomeComplete: false,
   theme: {
     dark: null,
     layout: SettingsTheme.sketch,
