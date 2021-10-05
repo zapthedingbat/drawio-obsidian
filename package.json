@@ -1,6 +1,6 @@
 {
   "name": "drawio-obsidian",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "This is a draw.io plugin for Obsidian (https://obsidian.md)",
   "scripts": {
     "automation": "mocha --exit --config ./test/automation/.mocharc.json",
