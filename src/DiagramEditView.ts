@@ -9,7 +9,7 @@ import DrawioClient, {
 } from "./DrawioClient";
 import DiagramView from "./DiagramView";
 
-const FILE_EXTENSIONS = ["svg", "drawio"];
+const FILE_EXTENSIONS = ["svg"];
 
 export class DiagramEditView extends DiagramViewBase {
   protected loadProgress: LoadProgress;
