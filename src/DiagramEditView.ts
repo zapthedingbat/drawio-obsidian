@@ -63,7 +63,7 @@ export class DiagramEditView extends DiagramViewBase {
 `,
     ];
     for (const styleSheet of Array.from(document.styleSheets)) {
-      for (const rule of Array.from(styleSheet.rules)) {
+      for (const rule of Array.from(styleSheet.cssRules)) {
         if (rule.cssText.startsWith("@font-face")) {
           cssRules.push(rule.cssText);
         }
