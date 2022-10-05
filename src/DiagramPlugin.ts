@@ -169,7 +169,7 @@ export default class DiagramPlugin extends Plugin {
         .onClick(async () => {
           const file = await this.createNewDiagramFile(view.file.parent);
           editor.replaceSelection(`![[${file.path}]]`);
-          const leaf = this.app.workspace.splitActiveLeaf("horizontal");
+          const leaf = this.app.workspace.getLeaf(true);
           await leaf.setViewState({
             type: DIAGRAM_EDIT_VIEW_TYPE,
             state: { file: file.path },
@@ -193,10 +193,7 @@ export default class DiagramPlugin extends Plugin {
             .setIcon("diagram")
             .onClick(async () => {
               // Open the editor in a horizontal split if this is the link context menu
-              const targetLeaf =
-                source === "link-context-menu"
-                  ? this.app.workspace.splitActiveLeaf("horizontal")
-                  : this.app.workspace.activeLeaf;
+              const targetLeaf = this.app.workspace.getLeaf(source === "link-context-menu");
               await targetLeaf.setViewState({
                 type: DIAGRAM_EDIT_VIEW_TYPE,
                 state: { file: abstractFile.path },
@@ -213,7 +210,7 @@ export default class DiagramPlugin extends Plugin {
           .setIcon("create-new-diagram")
           .onClick(async () => {
             const file = await this.createNewDiagramFile(abstractFile);
-            const leaf = this.app.workspace.activeLeaf;
+            const leaf = this.app.workspace.getLeaf(false);
             await leaf.setViewState({
               type: DIAGRAM_EDIT_VIEW_TYPE,
               state: { file: file.path },
@@ -272,7 +269,7 @@ export default class DiagramPlugin extends Plugin {
 
   private async editNewDiagramFile() {
     const file = await this.createNewDiagramFile();
-    const leaf = this.app.workspace.activeLeaf;
+    const leaf = this.app.workspace.getLeaf(false);
     await leaf.setViewState({
       type: DIAGRAM_EDIT_VIEW_TYPE,
       state: { file: file.path },

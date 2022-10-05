@@ -9,7 +9,7 @@ import DrawioClient, {
 } from "./DrawioClient";
 import DiagramView from "./DiagramView";
 
-const FILE_EXTENSIONS = ["svg", "drawio"];
+const FILE_EXTENSIONS = ["svg"];
 
 export class DiagramEditView extends DiagramViewBase {
   protected loadProgress: LoadProgress;
@@ -63,7 +63,7 @@ export class DiagramEditView extends DiagramViewBase {
 `,
     ];
     for (const styleSheet of Array.from(document.styleSheets)) {
-      for (const rule of Array.from(styleSheet.rules)) {
+      for (const rule of Array.from(styleSheet.cssRules)) {
         if (rule.cssText.startsWith("@font-face")) {
           cssRules.push(rule.cssText);
         }
