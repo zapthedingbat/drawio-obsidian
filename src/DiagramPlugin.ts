@@ -71,6 +71,7 @@ export default class DiagramPlugin extends Plugin {
     this.registerExtensionsReplace(["svg"], DIAGRAM_VIEW_TYPE);
     this.registerExtensionsReplace(["drawio"], DIAGRAM_EDIT_VIEW_TYPE);
     this.registerEvents();
+    this.registerCommands();
     this.addSettingTab(new DiagramSettingsTab(this.app, this));
     this.tryAddFileExplorerButton();
     // Show the welcome modal the first time the plugin is run
@@ -114,6 +115,16 @@ export default class DiagramPlugin extends Plugin {
     this.registerEvent(
       this.app.workspace.on("layout-change", this.handleLayoutChange, this)
     );
+  }
+
+  private registerCommands() {
+      this.addCommand({
+        id: "create-new-diagram",
+        name: "Create a new diagram",
+        callback: () => {
+          this.editNewDiagramFile()
+        }
+    });
   }
 
   private tryAddFileExplorerButton() {
