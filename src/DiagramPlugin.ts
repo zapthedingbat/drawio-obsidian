@@ -118,12 +118,12 @@ export default class DiagramPlugin extends Plugin {
   }
 
   private registerCommands() {
-      this.addCommand({
-        id: "create-new-diagram",
-        name: "Create a new diagram",
-        callback: () => {
-          this.editNewDiagramFile()
-        }
+    this.addCommand({
+      id: "create-new-diagram",
+      name: "Create a new diagram",
+      callback: () => {
+        this.editNewDiagramFile()
+      }
     });
   }
 
@@ -272,19 +272,17 @@ export default class DiagramPlugin extends Plugin {
     const newFilePath = await this.getNewDiagramFilePath(
       targetFolder,
       "Untitled Diagram",
-      "svg"
+      "drawio"
     );
     const file = await this.app.vault.create(newFilePath, EMPTY_DIAGRAM_SVG);
     return file;
   }
 
   private async editNewDiagramFile() {
+    // TODO: ここがなんかおかしい
     const file = await this.createNewDiagramFile();
     const leaf = this.app.workspace.getLeaf(false);
-    await leaf.setViewState({
-      type: DIAGRAM_EDIT_VIEW_TYPE,
-      state: { file: file.path },
-    });
+    await leaf.openFile(file);
   }
 
   isAppThemeDark(): boolean {
