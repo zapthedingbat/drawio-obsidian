@@ -266,12 +266,14 @@ export default class DiagramPlugin extends Plugin {
   }
 
   private async createNewDiagramFile(folder?: TFolder) {
+    const activeFile = this.app.workspace.getActiveFile()
     const targetFolder = folder
       ? folder
-      : this.app.fileManager.getNewFileParent("");
+      : activeFile.parent ? activeFile.parent :
+        this.app.fileManager.getNewFileParent("");
     const newFilePath = await this.getNewDiagramFilePath(
       targetFolder,
-      "Untitled Diagram",
+      activeFile.basename ?? "Untitled Diagram",
       "drawio"
     );
     const file = await this.app.vault.create(newFilePath, EMPTY_DIAGRAM_SVG);
