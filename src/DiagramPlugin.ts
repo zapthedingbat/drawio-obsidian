@@ -281,7 +281,6 @@ export default class DiagramPlugin extends Plugin {
   }
 
   private async editNewDiagramFile() {
-    // TODO: ここがなんかおかしい
     const file = await this.createNewDiagramFile();
     const leaf = this.app.workspace.getLeaf(false);
     await leaf.openFile(file);
