@@ -274,7 +274,7 @@ export default class DiagramPlugin extends Plugin {
     const newFilePath = await this.getNewDiagramFilePath(
       targetFolder,
       activeFile.basename ?? "Untitled Diagram",
-      "drawio"
+      "drawio.svg"
     );
     const file = await this.app.vault.create(newFilePath, EMPTY_DIAGRAM_SVG);
     return file;
