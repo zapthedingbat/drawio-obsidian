@@ -1,0 +1,28 @@
+.progress-bar-line {
+  width: 100%;
+  left: 0;
+}
+
+.progress-bar-indicator {
+  width: 90%;
+  margin: 0 10%;
+}
+
+.diagram-view svg {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+.diagram-view svg a:link,
+.diagram-view svg a:visited {
+  color: var(--interactive-accent, #00f);
+  filter: drop-shadow(
+    0 0 3px rgba(var(--interactive-accent-rgb, "0, 0, 255"), 0.5)
+  );
+}
+
+.diagram-view svg a:hover {
+  color: var(--interactive-accent-hover, #00f);
+  filter: drop-shadow(0 0 3px var(--interactive-accent-hover, #00f));
+}
