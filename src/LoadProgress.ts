@@ -5,6 +5,22 @@ export function createLoadProgress(
   container: HTMLElement
 ): LoadProgress {
   const obsidianAppLoadProgress = app.loadProgress;
+  if(!obsidianAppLoadProgress) {
+    return {
+      setMessage: function (message: string){
+        console.log('Set message', message);
+        return this
+      },
+      show: function (){
+        console.log('Set loading');
+        return this
+      },
+      hide: function (){
+        console.log('Set hiding');
+        return this
+      }
+    }
+  }
   const ObsidianLoadProgress = Object.getPrototypeOf(
     obsidianAppLoadProgress
   ).constructor;
