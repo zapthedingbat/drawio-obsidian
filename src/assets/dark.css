@@ -1,229 +1,229 @@
-html body .geDiagramContainer,
-html body div.geMenubarContainer,
-html body td.mxPopupMenuIcon,
-html body .geFormatContainer,
-html body div.geMenubarContainer .geStatus:hover {
+html body.theme-dark .geDiagramContainer,
+html body.theme-dark div.geMenubarContainer,
+html body.theme-dark td.mxPopupMenuIcon,
+html body.theme-dark .geFormatContainer,
+html body.theme-dark div.geMenubarContainer .geStatus:hover {
   background-color: #2a2a2a;
 }
-html .geSidebarContainer button {
+html body.theme-dark .geSidebarContainer button {
   border: 1px solid #505759;
   border-radius: 3px;
 }
 
-body div.mxPopupMenu {
+body.theme-dark div.mxPopupMenu {
   background: #2a2a2a;
   border: 1px solid #333;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
-body div.mxPopupMenu hr {
+body.theme-dark div.mxPopupMenu hr {
   background-color: #505759;
 }
-html body .geTabContainer {
+html body.theme-dark .geTabContainer {
   border-top: 1px solid #505759;
   background-color: #2a2a2a;
 }
-html body .geDragPreview {
+html body.theme-dark .geDragPreview {
   border: 1px dashed #cccccc;
 }
-html body .geMenubarContainer .geItem:active,
-html .geSidebarContainer button:active {
+html body.theme-dark .geMenubarContainer .geItem:active,
+html body.theme-dark .geSidebarContainer button:active {
   opacity: 0.7;
 }
-html body,
-html body .geFooterContainer,
-html body #geFooterItem1,
-html body textarea,
-html body .mxWindowTitle,
-html body .geDialogTitle,
-html body .geDialogFooter,
-select,
-html .geEditor div.mxTooltip,
-html .geHint {
+html body.theme-dark,
+html body.theme-dark .geFooterContainer,
+html body.theme-dark #geFooterItem1,
+html body.theme-dark textarea,
+html body.theme-dark .mxWindowTitle,
+html body.theme-dark .geDialogTitle,
+html body.theme-dark .geDialogFooter,
+html body.theme-dark select,
+html body.theme-dark .geEditor div.mxTooltip,
+html body.theme-dark .geHint {
   background: #2a2a2a;
   color: #cccccc;
 }
-/* html body a {
+/* html body.theme-dark a {
   color: #337ab7;
 } */
-html body div.mxRubberband {
+html body.theme-dark div.mxRubberband {
   border: 1px dashed #ffffff !important;
   background: #505759 !important;
 }
-html body .geTemplate {
+html body.theme-dark .geTemplate {
   color: #000000;
 }
-html body .geToolbarContainer,
-html body .geSidebar,
-html body .geSidebarContainer .geTitle,
-html body input,
-html body textarea,
-html body button,
-html body .geColorBtn,
-html body .geBaseButton,
-html body .geSidebarTooltip,
-html body .geBaseButton,
-html .geSidebarContainer button {
+html body.theme-dark .geToolbarContainer,
+html body.theme-dark .geSidebar,
+html body.theme-dark .geSidebarContainer .geTitle,
+html body.theme-dark input,
+html body.theme-dark textarea,
+html body.theme-dark button,
+html body.theme-dark .geColorBtn,
+html body.theme-dark .geBaseButton,
+html body.theme-dark .geSidebarTooltip,
+html body.theme-dark .geBaseButton,
+html body.theme-dark .geSidebarContainer button {
   background: #2a2a2a;
   border-color: #505759;
   box-shadow: none;
   color: #cccccc;
 }
-html body .geSidebarTooltip {
+html body.theme-dark .geSidebarTooltip {
   border: 1px solid #505759;
 }
-html body .geSprite,
-html body .geSocialFooter img,
-html body .mxPopupMenuItem > img {
+html body.theme-dark .geSprite,
+html body.theme-dark .geSocialFooter img,
+html body.theme-dark .mxPopupMenuItem > img {
   filter: invert(100%);
 }
-html body .geFormatContainer {
+html body.theme-dark .geFormatContainer {
   background-color: #2a2a2a !important;
   border-left: 1px solid #505759;
 }
-html body .geSidebarFooter {
+html body.theme-dark .geSidebarFooter {
   border-top: 1px solid #505759;
 }
-html body .geFormatSection {
+html body.theme-dark .geFormatSection {
   border-bottom: 1px solid #505759;
   border-color: #505759;
 }
-html body .geDiagramContainer {
+html body.theme-dark .geDiagramContainer {
   border-color: #505759;
 }
-html body .geSidebarContainer a,
-html body .geMenubarContainer a,
-html body .geToolbar a {
+html body.theme-dark .geSidebarContainer a,
+html body.theme-dark .geMenubarContainer a,
+html body.theme-dark .geToolbar a {
   color: #cccccc;
 }
-html body .geMenubarMenu {
+html body.theme-dark .geMenubarMenu {
   border-color: #505759 !important;
 }
-html body .geToolbarMenu,
-html body .geFooterContainer,
-html body .geFooterContainer td {
+html body.theme-dark .geToolbarMenu,
+html body.theme-dark .geFooterContainer,
+html body.theme-dark .geFooterContainer td {
   border-color: #505759;
 }
-html body .geFooterContainer a {
+html body.theme-dark .geFooterContainer a {
   background-color: none;
 }
-html body .geFooterContainer td:hover,
-html body #geFooterItem1:hover {
+html body.theme-dark .geFooterContainer td:hover,
+html body.theme-dark #geFooterItem1:hover {
   background-color: #000000;
 }
-html body .geSidebarContainer,
-html body .geDiagramBackdrop {
+html body.theme-dark .geSidebarContainer,
+html body.theme-dark .geDiagramBackdrop {
   background-color: #2a2a2a;
 }
-html body .geBackgroundPage {
+html body.theme-dark .geBackgroundPage {
   box-shadow: none;
 }
-html body .geBtn {
+html body.theme-dark .geBtn {
   background: #2a2a2a !important;
   border-color: #505759 !important;
   color: #cccccc !important;
 }
-html body .gePrimaryBtn {
+html body.theme-dark .gePrimaryBtn {
   background: #505759 !important;
   border-color: #cccccc !important;
   color: #cccccc !important;
 }
-.gePropHeader,
-.gePropRow,
-.gePropRowDark,
-.gePropRowCell,
-.gePropRow > .gePropRowCell,
-.gePropRowAlt > .gePropRowCell,
-.gePropRowDark > .gePropRowCell,
-.gePropRowDarkAlt > .gePropRowCell {
+html body.theme-dark .gePropHeader,
+html body.theme-dark .gePropRow,
+html body.theme-dark .gePropRowDark,
+html body.theme-dark .gePropRowCell,
+html body.theme-dark .gePropRow > .gePropRowCell,
+html body.theme-dark .gePropRowAlt > .gePropRowCell,
+html body.theme-dark .gePropRowDark > .gePropRowCell,
+html body.theme-dark .gePropRowDarkAlt > .gePropRowCell {
   background: #2a2a2a !important;
   border-color: #2a2a2a !important;
   color: #cccccc !important;
   font-weight: normal !important;
 }
-html body .geBtn:hover {
+html body.theme-dark .geBtn:hover {
   background: #000000 !important;
 }
-html body tr.mxPopupMenuItem {
+html body.theme-dark tr.mxPopupMenuItem {
   color: #cccccc;
 }
-html body tr.mxPopupMenuItemHover {
+html body.theme-dark tr.mxPopupMenuItemHover {
   background: #000000;
   color: #cccccc;
 }
-html body .geSidebarContainer .geTitle:hover,
-html body .geSidebarContainer .geItem:hover,
-html body .geMenubarContainer .geItem:hover,
-html body .geBaseButton:hover,
-html .geSidebarContainer button:hover {
+html body.theme-dark .geSidebarContainer .geTitle:hover,
+html body.theme-dark .geSidebarContainer .geItem:hover,
+html body.theme-dark .geMenubarContainer .geItem:hover,
+html body.theme-dark .geBaseButton:hover,
+html body.theme-dark .geSidebarContainer button:hover {
   background: #000000;
 }
-html body .geToolbarContainer .geSeparator {
+html body.theme-dark .geToolbarContainer .geSeparator {
   background-color: #505759;
 }
-html body .geHsplit,
-html body .geVsplit,
-html body table.mxPopupMenu hr {
+html body.theme-dark .geHsplit,
+html body.theme-dark .geVsplit,
+html body.theme-dark table.mxPopupMenu hr {
   border-color: #505759;
   background-color: #2a2a2a;
 }
-html body .geToolbarContainer .geButton:hover,
-html body .geToolbarContainer .geButton:active,
-html body .geToolbarContainer .geLabel:hover,
-html body .geToolbarContainer .geLabel:active,
-html body .geHsplit:hover,
-html body .geVsplit:hover,
-html .geSidebarContainer button:active {
+html body.theme-dark .geToolbarContainer .geButton:hover,
+html body.theme-dark .geToolbarContainer .geButton:active,
+html body.theme-dark .geToolbarContainer .geLabel:hover,
+html body.theme-dark .geToolbarContainer .geLabel:active,
+html body.theme-dark .geHsplit:hover,
+html body.theme-dark .geVsplit:hover,
+html body.theme-dark .geSidebarContainer button:active {
   background-color: #000;
 }
-html body .geToolbar {
+html body.theme-dark .geToolbar {
   border-color: #505759;
   box-shadow: none;
 }
-html body .geDialog,
-html body div.mxWindow {
+html body.theme-dark .geDialog,
+html body.theme-dark div.mxWindow {
   background: #2a2a2a;
   border-color: #c0c0c0;
   box-shadow: none;
   color: #cccccc;
 }
-.geHint {
+body.theme-dark .geHint {
   -webkit-box-shadow: 1px 1px 1px 0px #ccc;
   -moz-box-shadow: 1px 1px 1px 0px #ccc;
   box-shadow: 1px 1px 1px 0px #ccc;
 }
-html .geEditor ::-webkit-scrollbar-thumb {
+html body.theme-dark .geEditor ::-webkit-scrollbar-thumb {
   background-color: #505759;
 }
-html .geEditor ::-webkit-scrollbar-thumb:hover,
+html body.theme-dark .geEditor ::-webkit-scrollbar-thumb:hover,
 .geHsplit:hover,
 .geVsplit:hover {
   background-color: #a0a0a0;
 }
-html body .geStatusAlert {
+html body.theme-dark .geStatusAlert {
   background-color: #a20025;
   border: 1px solid #bd002b;
   color: #fff !important;
 }
-html body .geStatusAlert:hover {
+html body.theme-dark .geStatusAlert:hover {
   background-color: #a20025;
   border-color: #bd002b;
 }
-html body .geCommentContainer {
+html body.theme-dark .geCommentContainer {
   background-color: transparent;
   border-width: 1px;
   box-shadow: none;
   color: inherit;
 }
 
-.geNotification-bell * {
+html body.theme-dark .geNotification-bell * {
   display: block;
   margin: 0 auto;
   background-color: #aaa !important;
   box-shadow: 0px 0px 10px #aaa !important;
 }
 
-.geNotification-count {
+html body.theme-dark .geNotification-count {
   position: absolute;
   z-index: 1;
   top: -5px;
@@ -238,7 +238,7 @@ html body .geCommentContainer {
   animation: geZoomAnim 1s 1s both;
 }
 
-.geNotifPanel .header {
+html body.theme-dark .geNotifPanel .header {
   height: 30px;
   width: 100%;
   background: #424242 !important;
@@ -246,7 +246,7 @@ html body .geCommentContainer {
   font-size: 15px;
 }
 
-.geNotifPanel .notifications {
+html body.theme-dark .geNotifPanel .notifications {
   position: relative;
   height: 270px;
   overflow-x: hidden;
