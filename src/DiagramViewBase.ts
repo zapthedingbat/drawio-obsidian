@@ -9,7 +9,8 @@ export default abstract class DiagramViewBase extends EditableFileView {
   }
 
   onMoreOptionsMenu(menu: Menu) {
-    super.onPaneMenu(menu, 'more-options');
+    // fix for #99
+    // super.onPaneMenu(menu, 'more-options');
     menu.addItem((item) => {
       item.onClick((evt: MouseEvent) => {
         this.saveAsPng();

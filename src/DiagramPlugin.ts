@@ -57,9 +57,10 @@ export default class DiagramPlugin extends Plugin {
     items.splice(fromIndex, 1);
     items.splice(toIndex, 0, item);
 
-    items.forEach((menuItem) => {
-      menuDom.appendChild(menuItem.dom);
-    });
+    // Fix for #99
+    // items.forEach((menuItem) => {
+      // menuDom.appendChild(menuItem.dom);
+    // });
   }
 
   async onload() {
