@@ -7,3 +7,7 @@ dist/
 
 # obsidian
 data.json
+
+# IDE exclusions
+.idea
+*.iml

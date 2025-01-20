@@ -15,6 +15,7 @@ export interface DiagramPluginSettings {
   drawing: {
     sketch: optionalBoolean;
   };
+  cssSnippets: string[];
 }
 
 export const DEFAULT_SETTINGS: DiagramPluginSettings = {
@@ -26,4 +27,5 @@ export const DEFAULT_SETTINGS: DiagramPluginSettings = {
   drawing: {
     sketch: true,
   },
+  cssSnippets: [],
 };

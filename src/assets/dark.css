@@ -253,3 +253,8 @@ html body.theme-dark .geNotifPanel .notifications {
   overflow-y: auto;
   background-color: #707070;
 }
+
+/*Using !important here since the diagram puts inline style on svg element*/
+html body.theme-dark .geDiagramContainer>svg {
+  background-color: #2a2a2a !important;
+}

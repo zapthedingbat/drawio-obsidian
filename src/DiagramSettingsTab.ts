@@ -88,5 +88,16 @@ export default class DiagramSettingsTab extends PluginSettingTab {
             await this.plugin.saveSettings();
           });
       });
+
+    new Setting(containerEl)
+      .setName("CSS snippets")
+      .setDesc("Add paths to CSS snippets within the Vault, one by line. The snippets are used to modify the style of the diagram editor.")
+        .addTextArea(text => text
+        .setPlaceholder("Example: style.css\nsnippetsFolder/diagrams.css")
+        .setValue(this.plugin.settings.cssSnippets.join("\n"))
+        .onChange(async (value) => {
+            this.plugin.settings.cssSnippets = value.split("\n")
+            await this.plugin.saveSettings();
+        }));
   }
 }

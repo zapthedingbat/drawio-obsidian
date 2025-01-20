@@ -44,6 +44,19 @@ export class DiagramEditView extends DiagramViewBase {
         true
       );
       this.drawioClient.addCssToFrame(this.fontCss());
+
+      if(this.plugin.settings.cssSnippets){
+        for(let i = 0; i < this.plugin.settings.cssSnippets.length; i++){
+          const snippet = this.plugin.settings.cssSnippets[i];
+          const tFile = this.plugin.app.metadataCache.getFirstLinkpathDest(snippet, "");
+          if(tFile){
+            const cssSnippetSrc =  await this.app.vault.read(tFile)
+            if(cssSnippetSrc){
+              this.drawioClient.addCssToFrame(cssSnippetSrc)
+            }
+          }
+        }
+      }
       this.loadProgress.hide();
     } else {
       this.loadProgress.show();
