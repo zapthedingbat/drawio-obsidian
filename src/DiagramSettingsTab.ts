@@ -99,5 +99,17 @@ export default class DiagramSettingsTab extends PluginSettingTab {
             this.plugin.settings.cssSnippets = value.split("\n")
             await this.plugin.saveSettings();
         }));
+
+    new Setting(containerEl)
+      .setName("Diagram Folder")
+      .setDesc("Default location for new drawings. If empty, drawings will be created in Vault root. Note: If right-clicking a folder, the drawing will be created in that folder instead.")
+      .addText(text => text
+        .setPlaceholder("Example: drawings")
+        .setValue(this.plugin.settings.diagramFolder || "")
+        .onChange(async (value) => {
+          this.plugin.settings.diagramFolder = value.trim();
+          await this.plugin.saveSettings();
+        })
+      );
   }
 }

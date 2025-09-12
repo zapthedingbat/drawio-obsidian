@@ -179,7 +179,7 @@ export default class DiagramPlugin extends Plugin {
         .setTitle("Insert new diagram")
         .setIcon("create-new-diagram")
         .onClick(async () => {
-          const file = await this.createNewDiagramFile(view.file.parent);
+          const file = await this.createNewDiagramFile();
           editor.replaceSelection(`![[${file.path}]]`);
           const leaf = this.app.workspace.getLeaf(true);
           await leaf.setViewState({
@@ -267,9 +267,19 @@ export default class DiagramPlugin extends Plugin {
   }
 
   private async createNewDiagramFile(folder?: TFolder) {
-    const targetFolder = folder
-      ? folder
-      : this.app.fileManager.getNewFileParent("");
+    let targetFolder: TFolder;
+    if (folder) {
+      targetFolder = folder;
+    } else {
+      const folderPath = this.settings.diagramFolder?.trim();
+      const userDefinedFolder = folderPath
+        ? this.app.vault.getAbstractFileByPath(folderPath)
+        : null;
+      targetFolder =
+        userDefinedFolder instanceof TFolder
+          ? userDefinedFolder
+          : this.app.fileManager.getNewFileParent("");
+    }
     const newFilePath = await this.getNewDiagramFilePath(
       targetFolder,
       "Untitled Diagram",

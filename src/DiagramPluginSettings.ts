@@ -16,6 +16,7 @@ export interface DiagramPluginSettings {
     sketch: optionalBoolean;
   };
   cssSnippets: string[];
+  diagramFolder?: string;
 }
 
 export const DEFAULT_SETTINGS: DiagramPluginSettings = {
@@ -28,4 +29,5 @@ export const DEFAULT_SETTINGS: DiagramPluginSettings = {
     sketch: true,
   },
   cssSnippets: [],
+  diagramFolder: "",
 };
