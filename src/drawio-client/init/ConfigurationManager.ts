@@ -85,6 +85,7 @@ export interface DrawioUrlParams {
    * Sets the default pageVisible to false.
    */
   pv?: "0";
+  simpleLabels?: "1";
 }
 
 export interface DrawioResource {
@@ -240,11 +241,18 @@ export interface DrawioConfig {
    * will apply the default colors.
    */
   styles?: Array<{} | DrawioStyles>;
+
+  /**
+   * Disables word wrap and complex formatting for labels by default
+   * to avoid foreignObjects in the SVG output.
+   */
+  simpleLabels?: boolean;
 }
 
 const defaultConfiguration: DrawioConfig = {
   defaultLibraries: "general",
   libraries: [],
+  simpleLabels: true,
   // defaultEdgeStyle: {
   //   // strokeColor: "currentColor",
   // },
@@ -278,6 +286,7 @@ const defaultUrlParams: DrawioUrlParams = {
   dark: "0",
   rough: "1",
   sketch: "1",
+  simpleLabels:"1",
 };
 
 export class ConfigurationManager {
@@ -285,6 +294,7 @@ export class ConfigurationManager {
   private urlParams: any;
 
   constructor(win: Window) {
+
     this.urlParams = {};
     this.drawioConfig = {};
     this.defineUrlParams(win);
@@ -315,6 +325,7 @@ export class ConfigurationManager {
       get(target, propertyKey, receiver) {
         const value = Reflect.get(target, propertyKey, receiver);
         // NOTE: This is a really helpful place to debug values that drawio is reading
+        //console.log("drawioConfig ", propertyKey, value);
         return value;
       },
       set() {
@@ -400,6 +411,7 @@ export class ConfigurationManager {
         //   },
         // },
       ],
+      simpleLabels: true,
     };
   }
 

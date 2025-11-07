@@ -1,4 +1,5 @@
 import Plugin from "./Plugin";
+import { patch } from "../patch";
 
 /**
  * This is the entry point that is loaded into the iframe.
@@ -11,6 +12,7 @@ function app() {
   Menus.prototype.defaultMenuItems = Menus.prototype.defaultMenuItems.filter(
     (menuItem: string) => menuItem !== "help"
   );
+  patch(Editor, "isSettingsEnabled",  () => function() {return true});
   App.main(Plugin.plugin);
 }
 

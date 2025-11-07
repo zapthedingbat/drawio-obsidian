@@ -19,6 +19,10 @@ import maximizeGif from "base64!./drawio/src/main/webapp/mxgraph/images/maximize
 import resizeGif from "base64!./drawio/src/main/webapp/mxgraph/images/resize.gif";
 import drawlogoSvg from "inline!./drawio/src/main/webapp/images/drawlogo.svg";
 
+import startupjs from "inline!./drawio/src/main/webapp/math/es5/startup.js";
+import stencils_lean_mapping from "inline!./src/assets/stencils_lean_mapping.xml";
+import stencils_networks from "inline!./src/assets/stencils_networks.xml";
+
 export default [
   {
     mediaType: "text/css",
@@ -52,8 +56,7 @@ export default [
   },
   {
     mediaType: "text/javascript",
-    href: "js/extensions.min.js",
-    source: extensions,
+    href: "js/extensions.min.js", source: extensions,
   },
   {
     mediaType: "image/gif;base64",
@@ -69,5 +72,20 @@ export default [
     mediaType: "image/svg+xml",
     href: "images/drawlogo.svg",
     source: drawlogoSvg,
+  },
+  {
+    mediaType: "text/javascript",
+    href: "math/es5/startup.js",
+    source: startupjs,
+  },
+  {
+    mediaType: "text/xml",
+    href: "stencils/lean_mapping.xml",
+    source: stencils_lean_mapping,
+  },
+  {
+    mediaType: "text/xml",
+    href: "stencils/networks.xml",
+    source: stencils_networks,
   },
 ];

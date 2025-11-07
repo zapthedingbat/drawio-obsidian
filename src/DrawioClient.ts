@@ -150,6 +150,10 @@ export default class DrawioClient implements EventTarget {
       "data:text/html," +
       encodeURIComponent(`
 <script>
+//borrowed from drawio/src/main/webapp/index.html
+var mxIsElectron = navigator.userAgent != null && navigator.userAgent.toLowerCase().indexOf(' electron/') > -1 && 
+							navigator.userAgent.indexOf(' draw.io/') > -1;
+
 const onWindowMessage = (messageEvent) => {
   const message = JSON.parse(messageEvent.data);
   if(message.action==="script"){
@@ -161,7 +165,16 @@ const onWindowMessage = (messageEvent) => {
 }
 window.addEventListener("message",onWindowMessage);
 window.parent.postMessage("{\\"event\\":\\"iframe\\"}",'*');
-</script>`);
+</script>
+<body class="geEditor geClassic">
+<div id="geInfo">
+	<div class="geBlock">
+	</div>
+</div>
+
+</body>
+
+`);
 
     const frame = document.createElement("iframe");
     frame.setAttribute("frameborder", "0");

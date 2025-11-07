@@ -48,6 +48,11 @@ export class RequestManager {
     if (this.blobCache.has(url)) {
       return this.blobCache.get(url);
     }
+    //WTF?
+    if (url == "null") {
+      console.warn("get null resource, looks like error");
+      return url;
+    }
 
     const file = this.responses.find((file) => file.href === url);
     if (typeof file === "undefined") {
@@ -163,6 +168,13 @@ export class RequestManager {
               return Reflect.set(target, propertyKey, value, receiver);
             }
           },
+          get(target: any, propertyKey: any) {
+            let value = target[propertyKey];
+            if (typeof value === "function") {
+              return value.bind(target);
+            }
+            return value;
+          },
         });
       },
     });
@@ -188,6 +200,7 @@ export class RequestManager {
     this.interceptImages();
     this.interceptCss();
     this.interceptXhrRequests();
+
   }
 }
 
