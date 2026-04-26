@@ -1,4 +1,4 @@
-import { LoadProgress, TFile, ViewState, WorkspaceLeaf } from "obsidian";
+import { LoadProgress, Modal, TFile, ViewState, WorkspaceLeaf } from "obsidian";
 import DiagramPlugin from "./DiagramPlugin";
 import DiagramViewBase from "./DiagramViewBase";
 import { DIAGRAM_EDIT_VIEW_TYPE, DIAGRAM_VIEW_TYPE } from "./constants";
@@ -93,6 +93,21 @@ export class DiagramEditView extends DiagramViewBase {
     } as ViewState);
   }
 
+  async onRename(file: TFile) {
+    await super.onRename(file);
+  }
+
+  private openRenameModal() {
+    if (!this.file) return;
+    const basename = this.file.basename;
+    new RenameModal(this.app, basename, async (newName) => {
+      if (newName && newName !== basename) {
+        const newPath = this.file.path.replace(/[^/]+$/, newName + "." + this.file.extension);
+        await this.app.fileManager.renameFile(this.file, newPath);
+      }
+    }).open();
+  }
+
   async onLoadFile(file: TFile) {
     const data = await this.app.vault.read(file);
     (async () => {
@@ -140,6 +155,20 @@ export class DiagramEditView extends DiagramViewBase {
     this.drawioClient.addEventListener("focusin", () =>
       this.app.workspace.setActiveLeaf(this.leaf)
     );
+
+    const headerTitle = this.containerEl.querySelector(".view-header-title") as HTMLElement;
+    if (headerTitle) {
+      this.registerDomEvent(headerTitle, "click", () => this.openRenameModal());
+      headerTitle.style.cursor = "pointer";
+    }
+
+    this.registerEvent(this.app.vault.on("rename", (file: TFile, oldPath: string) => {
+      if (this.file && this.file.path === file.path) {
+        const titleEl = this.containerEl.querySelector(".view-header-title") as HTMLElement;
+        if (titleEl) titleEl.textContent = file.name;
+        (this.leaf as any).updateHeader?.();
+      }
+    }));
   }
 
   async onClose() {
@@ -157,5 +186,48 @@ export class DiagramEditView extends DiagramViewBase {
     this.contentEl.style.margin = "0";
     this.contentEl.style.padding = "0";
     this.contentEl.style.position = "relative";
+  }
+}
+
+class RenameModal extends Modal {
+  private cur: string;
+  private cb: (newName: string | null) => void;
+
+  constructor(app: any, cur: string, cb: (newName: string | null) => void) {
+    super(app);
+    this.cur = cur;
+    this.cb = cb;
+  }
+
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.createEl("h3", { text: "Rename diagram" });
+    const inp = contentEl.createEl("input", { type: "text" } as any);
+    inp.value = this.cur;
+    inp.style.width = "100%";
+    inp.select();
+    inp.addEventListener("keydown", (ev: KeyboardEvent) => {
+      if (ev.key === "Enter") {
+        this.cb(inp.value.trim() || null);
+        this.close();
+      }
+      if (ev.key === "Escape") {
+        this.cb(null);
+        this.close();
+      }
+    });
+    const row = contentEl.createDiv({ cls: "modal-button-container" });
+    row.createEl("button", { text: "Rename", cls: "mod-cta" }).addEventListener("click", () => {
+      this.cb(inp.value.trim() || null);
+      this.close();
+    });
+    row.createEl("button", { text: "Cancel" }).addEventListener("click", () => {
+      this.cb(null);
+      this.close();
+    });
+  }
+
+  onClose() {
+    this.contentEl.empty();
   }
 }
