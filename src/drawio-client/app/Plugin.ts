@@ -126,6 +126,12 @@ export default class Plugin {
     // Remove the status elements because this plugin manages saving the diagram
     app.statusContainer.remove();
     app.statusContainer = null;
+
+    // Guard setStatusText against null statusContainer after removal
+    patch(EditorUi.prototype, "setStatusText", (fn) => function (this: EditorUi, ...args: any[]) {
+      if (this.statusContainer == null) return;
+      return fn.apply(this, args);
+    });
     if (
       app.menubarContainer.parentElement.firstChild === app.menubarContainer &&
       app.menubarContainer.parentElement.childElementCount === 1

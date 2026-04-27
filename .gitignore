@@ -11,3 +11,6 @@ data.json
 # IDE exclusions
 .idea
 *.iml
+
+# git worktrees
+.worktrees/
