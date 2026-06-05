@@ -10,6 +10,7 @@ import {
 } from "./Messages";
 import { FrameMessenger } from "./FrameMessenger";
 import { DiagramPluginSettings } from "./DiagramPluginSettings";
+import { Notice } from "obsidian";
 
 export class FileChangeEvent extends Event {
   public readonly data: string;
@@ -45,6 +46,7 @@ export default class DrawioClient implements EventTarget {
   appCss: string;
   iframeElement: HTMLIFrameElement;
   isInitialized: boolean;
+  gotIframeMsg: boolean;
 
   constructor(contentEl: HTMLElement, settings: DiagramPluginSettings) {
     this.iframeElement = null;
@@ -52,6 +54,7 @@ export default class DrawioClient implements EventTarget {
     this.settings = settings;
     this.file = null;
     this.isInitialized = false;
+    this.gotIframeMsg = false;
 
     // Create the iframe to contain drawio
     this.iframeElement = this.createFrameElement();
@@ -146,22 +149,49 @@ export default class DrawioClient implements EventTarget {
   private createFrameElement(): HTMLIFrameElement {
     // Bootstrap script listens for a message containing
     // the first script to inject into the iframe
-    const frameSrc =
-      "data:text/html," +
-      encodeURIComponent(`
+    // Delivered via iframe.srcdoc (not a data: URL) so the frame inherits the
+    // parent origin. On iOS/iPadOS (Capacitor WKWebView) a data: URL frame has
+    // an opaque/null origin, which blocks dynamic <script> injection and the
+    // parent<->child postMessage handshake, leaving the editor blank. srcdoc is
+    // same-origin with the host, so injection + messaging work on mobile too.
+    const bootstrapHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+<body>
 <script>
+window.__bootRan = true;
+window.__bootErr = [];
+window.addEventListener("error", function(e){ try{ window.__bootErr.push("err:" + (e.message || "?") + "@" + (e.filename || "?") + ":" + (e.lineno || 0)); }catch(_){} });
+window.addEventListener("securitypolicyviolation", function(e){ try{ window.__bootErr.push("csp:" + e.violatedDirective + "|" + String(e.blockedURI || "").slice(0,48)); }catch(_){} });
 const onWindowMessage = (messageEvent) => {
   const message = JSON.parse(messageEvent.data);
   if(message.action==="script"){
-    const scriptElement = document.createElement("script");
-    scriptElement.text = message.script;
-    document.head.appendChild(scriptElement);
+    try {
+      const scriptElement = document.createElement("script");
+      scriptElement.text = message.script;
+      document.head.appendChild(scriptElement);
+    } catch(err){ if(window.__bootErr){ window.__bootErr.push("inject:" + (err && err.message)); } }
   }
   window.removeEventListener("message", onWindowMessage);
 }
 window.addEventListener("message",onWindowMessage);
 window.parent.postMessage("{\\"event\\":\\"iframe\\"}",'*');
-</script>`);
+</script>
+</body>
+</html>`;
 
     const frame = document.createElement("iframe");
     frame.setAttribute("frameborder", "0");
@@ -169,7 +199,7 @@ window.parent.postMessage("{\\"event\\":\\"iframe\\"}",'*');
       "style",
       "z-index:1;display:block;height:100%;width:100%;"
     );
-    frame.setAttribute("src", frameSrc);
+    frame.srcdoc = bootstrapHtml;
     return frame;
   }
 
@@ -204,10 +234,45 @@ window.parent.postMessage("{\\"event\\":\\"iframe\\"}",'*');
 
   // Wait for drawio to send an init message
   protected async waitForInit() {
-    await this.frameMessenger.waitForMessage(
-      (message: DrawioInitEventMessage) => message.event === "init",
-      5000
-    );
+    try {
+      await this.frameMessenger.waitForMessage(
+        (message: DrawioInitEventMessage) => message.event === "init",
+        5000
+      );
+    } catch (e) {
+      this.reportDiagnostics();
+      throw e;
+    }
+  }
+
+  // Surface why the editor frame failed to initialise (mobile diagnostics).
+  // srcdoc is same-origin, so the host can introspect the frame directly.
+  protected reportDiagnostics() {
+    const lines: string[] = [];
+    try {
+      const w =
+        this.iframeElement && (this.iframeElement.contentWindow as any);
+      const d = this.iframeElement && this.iframeElement.contentDocument;
+      lines.push("gotIframeMsg=" + this.gotIframeMsg);
+      if (!w) {
+        lines.push("contentWindow=null(blocked)");
+      } else {
+        lines.push("bootRan=" + !!w.__bootRan);
+        lines.push("scripts=" + (d ? d.querySelectorAll("script").length : "?"));
+        lines.push("mxLoadResources=" + w.mxLoadResources);
+        lines.push("mxClient=" + (typeof w.mxClient !== "undefined"));
+        lines.push("app=" + (typeof w.App !== "undefined" || typeof w.Draw !== "undefined"));
+        const miss = (w.__missingRes as string[]) || [];
+        lines.push(miss.length ? "missing=" + miss.slice(0, 8).join("|") : "missing=none");
+        const errs = (w.__bootErr as string[]) || [];
+        lines.push(errs.length ? "errs=" + errs.slice(0, 6).join(" ; ") : "errs=none");
+      }
+    } catch (e) {
+      lines.push("introspect-failed=" + ((e as Error) && (e as Error).message));
+    }
+    const msg = "drawio mobile diag [b6]: " + lines.join(", ");
+    console.error(msg);
+    new Notice(msg, 0);
   }
 
   protected handleMessage(message: EventMessage) {
@@ -215,6 +280,7 @@ window.parent.postMessage("{\\"event\\":\\"iframe\\"}",'*');
       case EventMessageEvents.Iframe:
         // This is the bootstrap message that comes from
         // the iframe once it has been put into the DOM
+        this.gotIframeMsg = true;
         this.isInitialized = false;
         this.dispatchEvent(new StateChangeEvent(this.isInitialized));
         this.addScriptToFrame(FRAME_INIT_SOURCE);

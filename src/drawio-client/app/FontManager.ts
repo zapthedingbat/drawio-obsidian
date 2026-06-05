@@ -25,51 +25,63 @@ export class FontManager {
   }
 
   private async getFontCssForUrlUncached(fontFamily: string, url: string) {
-    const response = await fetch(url);
-    const contentType = response.headers.get("content-type");
-    if (/text\/css/.test(contentType)) {
-      const css = await response.text();
-      const patternFontFace = /@font-face\s*\{([^\}]+)\}/g;
-      const patternDeclaration = /(?:\s*([a-z0-9-]+)\s*\:\s*([^;]+)\;)/g;
-      const patternUrl = /url\(['"]?([^\)]+)['"]?\)/;
-      const rules = [];
-      let fontFaceMatch;
-      while ((fontFaceMatch = patternFontFace.exec(css)) !== null) {
-        const rule = [];
-        const fontFaceCss = fontFaceMatch[1];
-        let declarationMatch;
-        while (
-          (declarationMatch = patternDeclaration.exec(fontFaceCss)) !== null
-        ) {
-          let declaration = declarationMatch[0];
-          const property = declarationMatch[1];
-          const value = declarationMatch[2];
-          if (property === "src") {
-            const urlMatch = patternUrl.exec(value);
-            if (urlMatch) {
-              const url = urlMatch[1];
-              const fontResponse = await fetch(url);
-              const blob = await fontResponse.blob();
-              const dataUrl = await this.toDataUrl(blob);
-              declaration = declaration.replace(url, dataUrl);
+    try {
+      const response = await fetch(url);
+      const contentType = response.headers.get("content-type");
+      if (/text\/css/.test(contentType)) {
+        const css = await response.text();
+        const patternFontFace = /@font-face\s*\{([^\}]+)\}/g;
+        const patternDeclaration = /(?:\s*([a-z0-9-]+)\s*\:\s*([^;]+)\;)/g;
+        const patternUrl = /url\(['"]?([^\)]+)['"]?\)/;
+        const rules = [];
+        let fontFaceMatch;
+        while ((fontFaceMatch = patternFontFace.exec(css)) !== null) {
+          const rule = [];
+          const fontFaceCss = fontFaceMatch[1];
+          let declarationMatch;
+          while (
+            (declarationMatch = patternDeclaration.exec(fontFaceCss)) !== null
+          ) {
+            let declaration = declarationMatch[0];
+            const property = declarationMatch[1];
+            const value = declarationMatch[2];
+            if (property === "src") {
+              const urlMatch = patternUrl.exec(value);
+              if (urlMatch) {
+                const url = urlMatch[1];
+                try {
+                  const fontResponse = await fetch(url);
+                  const blob = await fontResponse.blob();
+                  const dataUrl = await this.toDataUrl(blob);
+                  declaration = declaration.replace(url, dataUrl);
+                } catch (e) {
+                  console.warn(
+                    `Failed to inline font file from ${url}, leaving declaration unchanged`,
+                    e
+                  );
+                }
+              }
             }
+            rule.push(declaration);
           }
-          rule.push(declaration);
+          rules.push(rule);
         }
-        rules.push(rule);
-      }
-      return rules.map((rule) => `@font-face {${rule.join("")}}`).join("");
-    } else {
-      const blob = await response.blob();
-      const dataUrl = await new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.readAsDataURL(blob);
-      });
-      return `@font-face {
+        return rules.map((rule) => `@font-face {${rule.join("")}}`).join("");
+      } else {
+        const blob = await response.blob();
+        const dataUrl = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(blob);
+        });
+        return `@font-face {
         font-family: '${fontFamily}';
         src: url('${dataUrl}')
       }`;
+      }
+    } catch (e) {
+      console.warn(`Failed to load font css for url ${url}`, e);
+      return "";
     }
   }
 

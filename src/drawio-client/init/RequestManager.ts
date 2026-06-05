@@ -52,6 +52,10 @@ export class RequestManager {
     const file = this.responses.find((file) => file.href === url);
     if (typeof file === "undefined") {
       console.warn("Missing local resource", "https://app.diagrams.net/" + url);
+      try {
+        (window as any).__missingRes = (window as any).__missingRes || [];
+        (window as any).__missingRes.push(url);
+      } catch (e) {}
       // TODO: catch http requests so we can work offline
       // Allow fully qualified online resources
       return "https://app.diagrams.net/" + url;

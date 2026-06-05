@@ -1,4 +1,4 @@
-import { EditableFileView, Menu, WorkspaceLeaf } from "obsidian";
+import { EditableFileView, Menu, Notice, Platform, WorkspaceLeaf } from "obsidian";
 import DiagramPlugin from "./DiagramPlugin";
 
 export default abstract class DiagramViewBase extends EditableFileView {
@@ -56,12 +56,40 @@ export default abstract class DiagramViewBase extends EditableFileView {
     ctx.drawImage(img, 0, 0);
     const pngDataUrl = canvas.toDataURL("image/png");
 
-    // Click a link with the download attribute to invoke the download dialog
-    const link = document.createElement("a");
-    link.setAttribute("href", pngDataUrl);
-    link.setAttribute("download", this.file.basename + ".png");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // On mobile, <a download> is a no-op in the WKWebView, so write the PNG
+    // into the vault instead. On desktop, keep the native download dialog.
+    if (Platform.isMobile) {
+      try {
+        // Convert the data URL to bytes for vault.createBinary()
+        const base64String = pngDataUrl.split(",")[1];
+        const binaryString = atob(base64String);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        // Write the PNG next to the source diagram file
+        const pngFileName = this.file.basename + ".png";
+        const parentPath = this.file.parent?.path || "";
+        const pngPath = parentPath ? parentPath + "/" + pngFileName : pngFileName;
+        // Overwrite any existing PNG at the target path
+        const existingFile = this.app.vault.getAbstractFileByPath(pngPath);
+        if (existingFile) {
+          await this.app.vault.delete(existingFile);
+        }
+        await this.app.vault.createBinary(pngPath, bytes.buffer);
+        new Notice("Diagram exported to " + pngPath);
+      } catch (error) {
+        console.error("Failed to export PNG to vault:", error);
+        new Notice("Failed to export diagram as PNG");
+      }
+    } else {
+      // Desktop: trigger the native download dialog
+      const link = document.createElement("a");
+      link.setAttribute("href", pngDataUrl);
+      link.setAttribute("download", this.file.basename + ".png");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   }
 }
