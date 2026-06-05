@@ -14,6 +14,7 @@ import {
   MarkdownView,
   Menu,
   MenuItem,
+  Platform,
   Plugin,
   PluginManifest,
   PluginRegistration,
@@ -75,6 +76,13 @@ export default class DiagramPlugin extends Plugin {
     this.registerCommands();
     this.addSettingTab(new DiagramSettingsTab(this.app, this));
     this.tryAddFileExplorerButton();
+    // On mobile the file-explorer header button is unavailable, so add a
+    // ribbon icon (works on phone and tablet) to create a new diagram.
+    if (Platform.isMobile) {
+      this.addRibbonIcon("create-new-diagram", "Create new diagram", () => {
+        this.editNewDiagramFile();
+      });
+    }
     // Show the welcome modal the first time the plugin is run
     if (this.settings.welcomeComplete !== true) {
       const welcome = new WelcomeModal(this.app, this);
@@ -131,7 +139,7 @@ export default class DiagramPlugin extends Plugin {
   private tryAddFileExplorerButton() {
     if (
       this.isFileExplorerButtonPresent ||
-      !this.app.internalPlugins.plugins["file-explorer"].enabled
+      !this.app.internalPlugins.plugins["file-explorer"]?.enabled
     ) {
       return;
     }

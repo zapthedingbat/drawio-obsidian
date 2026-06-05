@@ -146,9 +146,28 @@ export default class DrawioClient implements EventTarget {
   private createFrameElement(): HTMLIFrameElement {
     // Bootstrap script listens for a message containing
     // the first script to inject into the iframe
-    const frameSrc =
-      "data:text/html," +
-      encodeURIComponent(`
+    // Delivered via iframe.srcdoc (not a data: URL) so the frame inherits the
+    // parent origin. On iOS/iPadOS (Capacitor WKWebView) a data: URL frame has
+    // an opaque/null origin, which blocks dynamic <script> injection and the
+    // parent<->child postMessage handshake, leaving the editor blank. srcdoc is
+    // same-origin with the host, so injection + messaging work on mobile too.
+    const bootstrapHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+<body>
 <script>
 const onWindowMessage = (messageEvent) => {
   const message = JSON.parse(messageEvent.data);
@@ -161,7 +180,9 @@ const onWindowMessage = (messageEvent) => {
 }
 window.addEventListener("message",onWindowMessage);
 window.parent.postMessage("{\\"event\\":\\"iframe\\"}",'*');
-</script>`);
+</script>
+</body>
+</html>`;
 
     const frame = document.createElement("iframe");
     frame.setAttribute("frameborder", "0");
@@ -169,7 +190,7 @@ window.parent.postMessage("{\\"event\\":\\"iframe\\"}",'*');
       "style",
       "z-index:1;display:block;height:100%;width:100%;"
     );
-    frame.setAttribute("src", frameSrc);
+    frame.srcdoc = bootstrapHtml;
     return frame;
   }
 
